@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EAG Suezmax Lists</title>
+<style>
+  body { font-family: Arial, sans-serif; margin:0; padding:0; }
+  /* Login styles */
+  #login-screen { display:flex; justify-content:center; align-items:center; height:100vh; background:#2c3e50; color:white; }
+  #login-box { background:#34495e; padding:2rem; border-radius:8px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.3); }
+  #login-box input { display:block; width:200px; padding:0.5rem; margin:0.5rem auto; border:none; border-radius:4px; }
+  #login-box button { padding:0.5rem 1rem; background:#1abc9c; border:none; border-radius:4px; color:white; cursor:pointer; font-size:1rem; }
+  #login-error { color:#e74c3c; margin-top:0.5rem; }
+
+  /* Dashboard styles */
+  #dashboard { display:none; }
+  header { background:#2c3e50; color:white; padding:1rem; text-align:center; font-size:1.5rem; }
+  nav { display:flex; justify-content:center; background:#34495e; }
+  nav button { background:none; border:none; color:white; padding:1rem; cursor:pointer; font-size:1rem; }
+  nav button.active { background:#1abc9c; font-weight:bold; }
+  iframe { width:100%; height:90vh; border:none; }
+</style>
+</head>
+<body>
+
+<!-- Login Screen -->
+<div id="login-screen">
+  <div id="login-box">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <div id="login-error"></div>
+  </div>
+</div>
+
+<!-- Dashboard -->
+<div id="dashboard">
+  <header>📊 EAG Suezmax Lists</header>
+  <nav>
+    <button onclick="showSheet('Bonny')" id="btn-Bonny" class="active">Bonny</button>
+    <button onclick="showSheet('Sangomar')" id="btn-Sangomar">Sangomar</button>
+  </nav>
+  <iframe id="sheetFrame" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQbIJQ91uJo4Bk90q8QVoJu0lFT0QaK_J1_T4c_qj6cPLDt0QGXZfVKJbUqLKqSIr2bIO9lxbedQZYo/pubhtml?gid=754372757&single=true"></iframe>
+</div>
+
+<script>
+  // --- Login ---
+  const users = { "declan":"green!", "allan":"james!", "dave":"fouracre!", "jamie":"shell!" };
+  function login(){
+    const username = document.getElementById("username").value.trim().toLowerCase();
+    const password = document.getElementById("password").value.trim();
+    if(users[username] && users[username]===password){
+      console.log("User logged in:",username);
+      document.getElementById("login-screen").style.display="none";
+      document.getElementById("dashboard").style.display="block";
+      showSheet("Bonny");
+    } else {
+      document.getElementById("login-error").innerText="Invalid username or password";
+    }
+  }
+
+  // --- Sheet switching ---
+  function showSheet(sheetName){
+    const frame = document.getElementById("sheetFrame");
+    const buttons = document.querySelectorAll("nav button");
+    buttons.forEach(btn=>btn.classList.remove("active"));
+
+    if(sheetName==="Bonny"){
+      frame.src = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQbIJQ91uJo4Bk90q8QVoJu0lFT0QaK_J1_T4c_qj6cPLDt0QGXZfVKJbUqLKqSIr2bIO9lxbedQZYo/pubhtml?gid=754372757&single=true";
+      document.getElementById("btn-Bonny").classList.add("active");
+    }
+    else if(sheetName==="Sangomar"){
+      frame.src = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQbIJQ91uJo4Bk90q8QVoJu0lFT0QaK_J1_T4c_qj6cPLDt0QGXZfVKJbUqLKqSIr2bIO9lxbedQZYo/pubhtml?gid=1941366550&single=true";
+      document.getElementById("btn-Sangomar").classList.add("active");
+    }
+  }
+</script>
+
+</body>
+</html>
